@@ -5,10 +5,10 @@ include __DIR__ . '/helpers/AppManager.php';
 
 //--------------TEST
 
-require_once __DIR__ . './models/User.php';
+require_once __DIR__ . '/models/User.php';
 
 $userModel = new User();
-$users = $userModel->getAll();
+$users = $userModel->getAllActive();
 
 dd($users);
 
