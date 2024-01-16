@@ -3,7 +3,6 @@
 include __DIR__ . '/../../config.php';
 include __DIR__ . '/../../helpers/AppManager.php';
 
-
 $currentUrl = $_SERVER['SCRIPT_NAME'];
 
 // Extract the last filename from the URL

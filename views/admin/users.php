@@ -1,9 +1,10 @@
 <?php
 require_once('../layouts/header.php');
-require_once __DIR__ . './../../models/User.php';
+require_once __DIR__ . '/../../models/User.php';
 
 $userModel = new User();
 $users = $userModel->getAll();
+
 ?>
 
 <div class="container">
