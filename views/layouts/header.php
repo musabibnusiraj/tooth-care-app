@@ -1,13 +1,14 @@
 <!-- Include Config -->
 <?php
 include __DIR__ . '/../../config.php';
+include __DIR__ . '/../../helpers/AppManager.php';
+
 
 $currentUrl = $_SERVER['SCRIPT_NAME'];
 
 // Extract the last filename from the URL
 $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 
-// dd($currentFilename);
 ?>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="assets/" data-template="vertical-menu-template-free">
