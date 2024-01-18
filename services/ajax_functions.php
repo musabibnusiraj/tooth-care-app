@@ -17,10 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         $userModel = new User();
         $created =  $userModel->createUser($username, $password, $permission, $email);
-
-        // echo json_encode(['success' => true, 'message' => "User created successfully!"]);
-        // exit;
-
         if ($created) {
             echo json_encode(['success' => true, 'message' => "User created successfully!"]);
         } else {
