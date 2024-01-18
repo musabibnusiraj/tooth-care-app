@@ -76,7 +76,7 @@ $users = $userModel->getAll();
 <div class="modal fade " id="createUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="create-user-form" action="<? url('services/ajax_functions.php') ?>">
+            <form id="create-user-form" action="<?= url('services/ajax_functions.php') ?>">
                 <input type="hidden" name="action" value="create_user">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel1">Create User</h5>
@@ -117,8 +117,8 @@ $users = $userModel->getAll();
                             <label class="form-label" for="permission">Permission</label>
                             <div class="input-group">
                                 <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                                <select class="form-select" id="permission" name="permission">
-                                    <option selected="">Choose...</option>
+                                <select class="form-select" id="permission" name="permission" required>
+                                    <option selected="" value="">Choose...</option>
                                     <option value="operator">Operator</option>
                                     <option value="doctor">Doctor</option>
                                 </select>

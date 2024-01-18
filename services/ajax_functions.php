@@ -8,6 +8,7 @@ require_once '../models/User.php';
 
 //create user
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_user') {
+    dd($_POST);
 }
 
 //book_appointment
