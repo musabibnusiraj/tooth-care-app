@@ -125,6 +125,9 @@ $users = $userModel->getAll();
                             </div>
                         </div>
                     </div>
+                    <div class="mb-3 mt-3">
+                        <div id="alert-container"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -165,10 +168,12 @@ require_once('../layouts/footer.php');
                     dataType: 'json',
                     success: function(response) {
                         showAlert(response.message, response.success ? 'primary' : 'danger');
-                        $('#createUserModal').modal('hide');
-                        setTimeout(function() {
-                            location.reload();
-                        }, 1000);
+                        if (response.success) {
+                            $('#createUserModal').modal('hide');
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        }
                     },
                     error: function(error) {
                         // Handle the error
