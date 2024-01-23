@@ -279,6 +279,11 @@ require_once('../layouts/footer.php');
             success: function(response) {
                 showAlert(response.message, response.success ? 'primary' : 'danger');
                 if (response.success) {
+                    var username = response.data.username;
+                    var email = response.data.email;
+                    var permission = response.data.permission;
+
+                    $('#editUserModal #username').val(username);
                     $('#editUserModal').modal('show');
                 }
             },
