@@ -284,6 +284,8 @@ require_once('../layouts/footer.php');
                     var permission = response.data.permission;
 
                     $('#editUserModal #username').val(username);
+                    $('#editUserModal #email').val(email);
+                    $('#editUserModal #permission option[value="' + permission + '"]').prop('selected', true);
                     $('#editUserModal').modal('show');
                 }
             },
