@@ -258,14 +258,38 @@ require_once('../layouts/footer.php');
             }
         });
 
-        $('.edit-user').on('click', function() {
+        $('.edit-user').on('click', async function() {
             var user_id = $(this).data('id');
-            var username = $(this).data('username');
-            var email = $(this).data('email');
-
-            $('#editUserModal #username').val(username);
-            $('#editUserModal #email').val(email);
-            $('#editUserModal').modal('show');
+            await getUserById(user_id);
         })
     });
+
+    async function getUserById(id) {
+        var formAction = $('#update-user-form').attr('action');
+
+        // Perform AJAX request
+        $.ajax({
+            url: formAction,
+            type: 'GET',
+            data: {
+                user_id: id,
+                action: 'get_user'
+            }, // Form data
+            dataType: 'json',
+            success: function(response) {
+                showAlert(response.message, response.success ? 'primary' : 'danger');
+                if (response.success) {
+                    $('#editUserModal').modal('show');
+                }
+            },
+            error: function(error) {
+                // Handle the error
+                console.error('Error submitting the form:', error);
+            },
+            complete: function(response) {
+                // This will be executed regardless of success or error
+                console.log('Request complete:', response);
+            }
+        });
+    }
 </script>

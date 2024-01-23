@@ -30,21 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 //Get user by id
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['user_id'] === 'user_id' && $_GET['action'] == 'get_user') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id']) && isset($_GET['action']) &&  $_GET['action'] == 'get_user') {
 
     try {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $permission = $_POST['permission'];
-
-        $userModel = new User();
-        $created =  $userModel->createUser($username, $password, $permission, $email);
-        if ($created) {
-            echo json_encode(['success' => true, 'message' => "User created successfully!"]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to create user. May be user already exist!']);
-        }
+        dd($_GET);
     } catch (PDOException $e) {
         // Handle database connection errors
         echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
