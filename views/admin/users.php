@@ -55,7 +55,7 @@ $users = $userModel->getAll();
                                     </td>
                                     <td>
                                         <div>
-                                            <button class="btn btn-sm btn-info m-2 edit-user" data-id="<?= $c['id']; ?>" data-name="<?= $c['username']; ?>">Edit</button>
+                                            <button class="btn btn-sm btn-info m-2 edit-user" data-id="<?= $c['id']; ?>" data-username="<?= $c['username']; ?>" data-email="<?= $c['email']; ?>">Edit</button>
 
                                         </div>
                                     </td>
@@ -140,11 +140,11 @@ $users = $userModel->getAll();
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Update User Modal -->
 <div class="modal fade " id="editUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="create-user-form" action="<?= url('services/ajax_functions.php') ?>">
+            <form id="update-user-form" action="<?= url('services/ajax_functions.php') ?>">
                 <input type="hidden" name="action" value="update_user">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel1">Edit User</h5>
@@ -260,10 +260,12 @@ require_once('../layouts/footer.php');
 
         $('.edit-user').on('click', function() {
             var user_id = $(this).data('id');
-            var name = $(this).data('name');
-            alert(name);
-            alert(user_id);
-            // $('#editUserModal').modal('show');
+            var username = $(this).data('username');
+            var email = $(this).data('email');
+
+            $('#editUserModal #username').val(username);
+            $('#editUserModal #email').val(email);
+            $('#editUserModal').modal('show');
         })
     });
 </script>
