@@ -298,9 +298,9 @@ require_once('../layouts/footer.php');
                         showAlert(response.message, response.success ? 'primary' : 'danger');
                         if (response.success) {
                             $('#editUserModal').modal('hide');
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000);
+                            // setTimeout(function() {
+                            //     location.reload();
+                            // }, 1000);
                         }
                     },
                     error: function(error) {

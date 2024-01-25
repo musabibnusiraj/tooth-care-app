@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $email = $_POST['email'];
         $password = $_POST['password'];
         $permission = $_POST['permission'];
-        $is_active = $_POST['is_active'];
+        $is_active = $_POST['is_active'] == 1 ? 1 : 0;
         $id = $_POST['id'];
 
         // Validate inputs
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
 
         $userModel = new User();
-        $updated =  $userModel->updateUser($id, $username, $password, $permission, $email);
+        $updated =  $userModel->updateUser($id, $username, $password, $permission, $email, $is_active);
         if ($updated) {
             echo json_encode(['success' => true, 'message' => "User updated successfully!"]);
         } else {
