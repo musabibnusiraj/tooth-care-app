@@ -54,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['user_id']) && isset($_GE
     try {
         $user_id = $_GET['user_id'];
         $userModel = new User();
-        $deleted = $userModel->deleteRec($user_id);
+        $deleted = $userModel->deleteUser($user_id);
+
         if ($deleted) {
             echo json_encode(['success' => true, 'message' => "User deleted successfully!", 'data' => $deleted]);
         } else {

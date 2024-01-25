@@ -66,7 +66,6 @@ abstract class BaseModel
     public function deleteRec($id)
     {
         $param = array(':id' => $id);
-        $response =  $this->pm->run("DELETE FROM " . $this->getTableName() . " WHERE id = :id", $param);
-        return true; //TODO
+        return $this->pm->run("DELETE FROM " . $this->getTableName() . " WHERE id = :id", $param);
     }
 }

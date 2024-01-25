@@ -153,4 +153,16 @@ class User extends BaseModel
             return null;
         }
     }
+
+    function deleteUser($id)
+    {
+        $user = new User();
+        $user->deleteRec($id);
+
+        if ($user) {
+            return true; // User udapted successfully
+        } else {
+            return false; // User update failed (likely due to database error)
+        }
+    }
 }
