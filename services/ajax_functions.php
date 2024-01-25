@@ -69,19 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             echo json_encode(['success' => false, 'message' => 'Invalid email address']);
             exit;
         }
-        dd('here');
+
         $userModel = new User();
         $updated =  $userModel->updateUser($id, $username, $password, $permission, $email);
         if ($updated) {
-            echo "User updated successfully!\n";
+            echo json_encode(['success' => true, 'message' => "User updated successfully!"]);
         } else {
-            echo "User update failed.\n";
-        }
-
-        if ($created) {
-            echo json_encode(['success' => true, 'message' => "User created successfully!"]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to create user. May be user already exist!']);
+            echo json_encode(['success' => false, 'message' => 'Failed to update user. May be user already exist!']);
         }
     } catch (PDOException $e) {
         // Handle database connection errors

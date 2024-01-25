@@ -169,14 +169,14 @@ $users = $userModel->getAll();
                         <div class="col mb-0 form-password-toggle">
                             <label class="form-label" for="password">Password</label>
                             <div class="input-group">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="············" aria-describedby="basic-default-password2">
+                                <input type="password" name="password" class="form-control" id="password" placeholder="············" aria-describedby="basic-default-password2" required>
                                 <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                         </div>
                         <div class="col mb-0 form-password-toggle">
                             <label class="form-label" for="basic-default-password12">Confirm Password</label>
                             <div class="input-group">
-                                <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2">
+                                <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2" required>
                                 <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                         </div>

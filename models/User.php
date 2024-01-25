@@ -34,7 +34,7 @@ class User extends BaseModel
     protected function updateRec()
     {
         // Check if the new username or email already exists (excluding the current user's record)
-        $existingUser = $this->getUserByUsernameOrEmail($this->username, $this->email, $this->id);
+        $existingUser = $this->getUserByUsernameOrEmailWithId($this->username, $this->email, $this->id);
         if ($existingUser) {
             // Handle the error (return an appropriate message or throw an exception)
             return false; // Or throw an exception with a specific error message
@@ -80,7 +80,7 @@ class User extends BaseModel
 
         $result = $this->pm->run($query, $param);
 
-        return $result->fetch(); // Return the user if found, or false if not found
+        return $result; // Return the user if found, or false if not found
     }
 
     function createUser($username, $password, $permission, $email, $is_active = 1)
@@ -135,9 +135,6 @@ class User extends BaseModel
             return false; // User update failed (likely due to database error)
         }
     }
-
-
-
 
     public function getUserByUsernameOrEmail($username, $email)
     {
