@@ -207,7 +207,7 @@ $users = $userModel->getAll();
                         </div>
                     </div>
                     <div class="mb-3 mt-3">
-                        <div id="alert-container"></div>
+                        <div id="alert-container-update-form"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -295,12 +295,12 @@ require_once('../layouts/footer.php');
                     data: formData, // Form data
                     dataType: 'json',
                     success: function(response) {
-                        showAlert(response.message, response.success ? 'primary' : 'danger');
+                        showAlert(response.message, response.success ? 'primary' : 'danger', 'alert-container-update-form');
                         if (response.success) {
                             $('#editUserModal').modal('hide');
-                            // setTimeout(function() {
-                            //     location.reload();
-                            // }, 1000);
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
                         }
                     },
                     error: function(error) {
