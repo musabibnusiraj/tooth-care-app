@@ -144,8 +144,9 @@ $users = $userModel->getAll();
 <div class="modal fade " id="editUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="update-user-form" action="<?= url('services/ajax_functions.php') ?>">
+            <form id="update-user-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off">
                 <input type="hidden" name="action" value="update_user">
+                <input type="hidden" name="id" id="user_id">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel1">Edit User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -168,14 +169,14 @@ $users = $userModel->getAll();
                         <div class="col mb-0 form-password-toggle">
                             <label class="form-label" for="password">Password</label>
                             <div class="input-group">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="············" aria-describedby="basic-default-password2" required>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="············" aria-describedby="basic-default-password2">
                                 <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                         </div>
                         <div class="col mb-0 form-password-toggle">
                             <label class="form-label" for="basic-default-password12">Confirm Password</label>
                             <div class="input-group">
-                                <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2" required>
+                                <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2">
                                 <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                         </div>
@@ -213,7 +214,7 @@ $users = $userModel->getAll();
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" id="create-now" class="btn btn-primary">Save</button>
+                    <button type="button" id="update-now" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
@@ -274,6 +275,49 @@ require_once('../layouts/footer.php');
             var user_id = $(this).data('id');
             await getUserById(user_id);
         })
+
+        $('#update-now').on('click', function() {
+
+            // Get the form element
+            var form = $('#update-user-form')[0];
+            $('#update-user-form')[0].reportValidity();
+
+            // Check form validity
+            if (form.checkValidity()) {
+                // Serialize the form data
+                var formData = $('#update-user-form').serialize();
+                var formAction = $('#update-user-form').attr('action');
+
+                // Perform AJAX request
+                $.ajax({
+                    url: formAction,
+                    type: 'POST',
+                    data: formData, // Form data
+                    dataType: 'json',
+                    success: function(response) {
+                        showAlert(response.message, response.success ? 'primary' : 'danger');
+                        if (response.success) {
+                            $('#editUserModal').modal('hide');
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        }
+                    },
+                    error: function(error) {
+                        // Handle the error
+                        console.error('Error submitting the form:', error);
+                    },
+                    complete: function(response) {
+                        // This will be executed regardless of success or error
+                        console.log('Request complete:', response);
+                    }
+                });
+            } else {
+                var message = ('Form is not valid. Please check your inputs.');
+                showAlert(message, 'danger');
+            }
+        });
+
     });
 
     async function getUserById(id) {
@@ -291,11 +335,13 @@ require_once('../layouts/footer.php');
             success: function(response) {
                 showAlert(response.message, response.success ? 'primary' : 'danger');
                 if (response.success) {
+                    var user_id = response.data.id;
                     var username = response.data.username;
                     var email = response.data.email;
                     var permission = response.data.permission;
                     var is_active = response.data.is_active;
 
+                    $('#editUserModal #user_id').val(user_id);
                     $('#editUserModal #username').val(username);
                     $('#editUserModal #email').val(email);
                     $('#editUserModal #permission option[value="' + permission + '"]').prop('selected', true);
