@@ -193,6 +193,18 @@ $users = $userModel->getAll();
                             </div>
                         </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="col mb-0">
+                            <label class="form-label" for="is_active">Status</label>
+                            <div class="input-group">
+                                <select class="form-select" id="is_active" name="is_active" required>
+                                    <option selected="" value="">Choose...</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="mb-3 mt-3">
                         <div id="alert-container"></div>
                     </div>
@@ -282,10 +294,12 @@ require_once('../layouts/footer.php');
                     var username = response.data.username;
                     var email = response.data.email;
                     var permission = response.data.permission;
+                    var is_active = response.data.is_active;
 
                     $('#editUserModal #username').val(username);
                     $('#editUserModal #email').val(email);
                     $('#editUserModal #permission option[value="' + permission + '"]').prop('selected', true);
+                    $('#editUserModal #is_active option[value="' + is_active + '"]').prop('selected', true);
                     $('#editUserModal').modal('show');
                 }
             },
