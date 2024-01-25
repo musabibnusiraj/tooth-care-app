@@ -48,6 +48,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id']) && isset($_G
     exit;
 }
 
+//Delete by user id
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['user_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_user') {
+
+    try {
+        $user_id = $_GET['user_id'];
+        $userModel = new User();
+        $deleted = $userModel->deleteRec($user_id);
+        if ($deleted) {
+            echo json_encode(['success' => true, 'message' => "User deleted successfully!", 'data' => $deleted]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete user.']);
+        }
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
 //update user
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_user') {
     try {
