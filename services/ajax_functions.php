@@ -221,3 +221,5 @@ if (
     }
     exit;
 }
+
+dd('Access denied..!');
