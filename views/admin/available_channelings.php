@@ -10,16 +10,17 @@ $doctors = $doctorModel->getAllActive();
     <h1 class="mx-3 my-5">Appointment Booking</h1>
     <section class="content m-3">
         <div class="container-fluid">
-            <?php
+            <div class="row">
+                <?php
 
-            // Generate appointment slots
-            foreach ($doctors as $doctor) {
-                $name = ($doctor['name'] ?? "");
-                $about = ($doctor['about'] ?? "");
-                $doctor_id = ($doctor['id'] ?? "");
+                // Generate appointment slots
+                foreach ($doctors as $doctor) {
+                    $name = ($doctor['name'] ?? "");
+                    $about = ($doctor['about'] ?? "");
+                    $doctor_id = ($doctor['id'] ?? "");
 
-            ?>
-                <div class="row">
+                ?>
+
                     <div class="col-md-6 col-lg-4">
                         <div class="card">
                             <div class="card-header"></div>
@@ -33,29 +34,28 @@ $doctors = $doctorModel->getAllActive();
                                 </p>
                                 <div class="col-md-12">
                                     <input class="form-control" type="week" name="week" id="week_date" required>
-                                    <input type="hidden" name="doctor_id" id="doctor_id" value="<?= $doctor_id ?>">
                                 </div>
                                 <div class="col-md-12 mt-2 text-right">
-                                    <a href="javascript:void(0)" class="btn btn-primary" id="bookNowBtn">Book Now</a>
+                                    <a href="javascript:void(0)" class="btn btn-primary bookNowBtn" data-doctor-id="<?= $doctor_id ?>">Book Now</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php
-            }
-            ?>
-        </div>
 
+                <?php
+                }
+                ?>
+            </div>
+        </div>
 
     </section>
 </div>
 <?php require_once('../layouts/footer.php'); ?>
 <script>
     $(document).ready(function() {
-        $("#bookNowBtn").on("click", function() {
+        $(".bookNowBtn").on("click", function() {
             var selectedWeek = $("#week_date").val();
-            var doctorId = $("#doctor_id").val();
+            var doctorId = $(this).data('doctor-id');
 
             // Check if the selected week is not null
             if (selectedWeek !== null && selectedWeek !== "") {
