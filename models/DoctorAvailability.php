@@ -23,7 +23,6 @@ class DoctorAvailability extends BaseModel
         // Construct the SQL query with the join:
         $sql = "SELECT $tableName.*, doctors.name as doctor_name FROM $tableName JOIN $doctorsTableName ON $tableName.$doctorIdField = $doctorsTableName.id";
 
-        // dd($sql);
         return $this->pm->run($sql);
     }
 

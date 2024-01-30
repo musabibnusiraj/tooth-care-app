@@ -4,7 +4,7 @@ require_once __DIR__ . './../../models/DoctorAvailability.php';
 
 $doctorAvailabilityModel = new DoctorAvailability();
 $doctorAvailabilities = $doctorAvailabilityModel->getAll();
-// dd($doctorAvailabilities);
+
 ?>
 <div class="container">
 
