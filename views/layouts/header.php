@@ -84,6 +84,14 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                             </a>
                         </li>
 
+
+
+                        <li class="menu-item <?= $currentFilename === "available_channelings.php" ? 'active' : '' ?>">
+                            <a href="<?= url('views/admin/available_channelings.php') ?>" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-run"></i>
+                                <div data-i18n="Analytics">Appointment Booking</div>
+                            </a>
+                        </li>
                         <li class="menu-item <?= $currentFilename === "doctors.php" ? 'active' : '' ?>">
                             <a href="<?= url('views/admin/doctors.php') ?>" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-plus-medical"></i>
@@ -91,12 +99,6 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                             </a>
                         </li>
 
-                        <li class="menu-item <?= $currentFilename === "appointment_booking.php" ? 'active' : '' ?>">
-                            <a href="<?= url('views/admin/appointment_booking.php') ?>" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-run"></i>
-                                <div data-i18n="Analytics">Appointment Booking</div>
-                            </a>
-                        </li>
                         <li class="menu-item <?= $currentFilename === "doctor_availability.php" ? 'active' : '' ?>">
                             <a href="<?= url('views/admin/doctor_availability.php') ?>" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-time-five"></i>
