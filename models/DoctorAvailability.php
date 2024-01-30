@@ -14,6 +14,20 @@ class DoctorAvailability extends BaseModel
         return "doctor_availability";
     }
 
+    public function getAll()
+    {
+        $tableName = $this->getTableName();
+        $doctorsTableName = "doctors";
+        $doctorIdField = "doctor_id";
+
+        // Construct the SQL query with the join:
+        $sql = "SELECT $tableName.*, doctors.name as doctor_name FROM $tableName JOIN $doctorsTableName ON $tableName.$doctorIdField = $doctorsTableName.id";
+
+        // dd($sql);
+        return $this->pm->run($sql);
+    }
+
+
     public function getAllActiveByDoctorId($doctor_id)
     {
         $param = array(':doctor_id' => $doctor_id);

@@ -96,50 +96,56 @@ class AppointmentScheduler
             $currentDateFullString = $currentDate->format("l, F j, Y");
             $currentDateString = $currentDate->format("Y-m-d");
 
-            // Loop through available slots and check if they match the current day.
-            foreach ($this->availableSlots as $slot) {
-                $slotDay = $slot['day'] ?? "";
+            if (!empty($this->availableSlots)) {
+                // Loop through available slots and check if they match the current day.
+                foreach ($this->availableSlots as $slot) {
+                    $slotDay = $slot['day'] ?? "";
 
-                if ($slotDay == $day) {
-                    $sessionFrom = new DateTime($slot['session_from']);
-                    $sessionTo = new DateTime($slot['session_to']);
-                    $currentSlot = clone $sessionFrom;
+                    if ($slotDay == $day) {
+                        $sessionFrom = new DateTime($slot['session_from']);
+                        $sessionTo = new DateTime($slot['session_to']);
+                        $currentSlot = clone $sessionFrom;
 
-                    // Output a row for each day with available slots.
-                    echo '<div class="row my-5 border rounded border-secondary"><h3 class="mt-4 text-capitalize">' . $currentDateFullString . '</h3>';
+                        // Output a row for each day with available slots.
+                        echo '<div class="row my-5 border rounded border-secondary"><h3 class="mt-4 text-capitalize">' . $currentDateFullString . '</h3>';
 
-                    // Loop through time slots for the current day.
-                    while ($currentSlot <= $sessionTo) {
-                        $time_slot_from = $currentSlot->format('h:i A');
-                        $time_slot_to = $currentSlot->add($this->slotDuration)->format('h:i A');
+                        // Loop through time slots for the current day.
+                        while ($currentSlot <= $sessionTo) {
+                            $time_slot_from = $currentSlot->format('h:i A');
+                            $time_slot_to = $currentSlot->add($this->slotDuration)->format('h:i A');
 
-                        echo '<div class="col-3">';
-                        echo '<div class="card m-3 mb-5">';
-                        echo '<div class="card-body">';
-                        echo '<h5 class="card-title">Appointment Slot</h5>';
-                        echo '<p class="card-text">' . $time_slot_from . ' to ' . $time_slot_to . '</p>';
+                            echo '<div class="col-3">';
+                            echo '<div class="card m-3 mb-5">';
+                            echo '<div class="card-body">';
+                            echo '<h5 class="card-title">Appointment Slot</h5>';
+                            echo '<p class="card-text">' . $time_slot_from . ' to ' . $time_slot_to . '</p>';
 
-                        $currentSlot->sub($this->slotDuration);
-                        $timeSlotFrom = $currentSlot->format('H:i:s');
-                        $timeSlotTo = $currentSlot->add($this->slotDuration)->format('H:i:s');
+                            $currentSlot->sub($this->slotDuration);
+                            $timeSlotFrom = $currentSlot->format('H:i:s');
+                            $timeSlotTo = $currentSlot->add($this->slotDuration)->format('H:i:s');
 
-                        // Check the availability of the time slot.
-                        if ($this->today > $currentDate) {
-                            echo '<button disabled class="btn btn-warning d-flex">Expired</button>';
-                        } else if ($this->isTimeSlotAvailable($timeSlotFrom, $this->existingAppointments, $currentDateString)) {
-                            echo '<button type="button" data-appointment-date="' . $currentDateString . '" data-time-slot-to="' . $timeSlotTo . '" data-time-slot-from="' . $timeSlotFrom . '" class="btn btn-primary active book-modal" data-bs-toggle="modal" data-bs-target="#appointmentModal">Available</button>';
-                        } else {
-                            echo '<button disabled class="btn btn-danger text-center">Booked</button>';
+                            // Check the availability of the time slot.
+                            if ($this->today > $currentDate) {
+                                echo '<button disabled class="btn btn-warning d-flex">Expired</button>';
+                            } else if ($this->isTimeSlotAvailable($timeSlotFrom, $this->existingAppointments, $currentDateString)) {
+                                echo '<button type="button" data-appointment-date="' . $currentDateString . '" data-time-slot-to="' . $timeSlotTo . '" data-time-slot-from="' . $timeSlotFrom . '" class="btn btn-primary active book-modal" data-bs-toggle="modal" data-bs-target="#appointmentModal">Available</button>';
+                            } else {
+                                echo '<button disabled class="btn btn-danger text-center">Booked</button>';
+                            }
+
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
                         }
 
                         echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
                     }
-
-                    echo '</div>';
                 }
             }
+        }
+
+        if (empty($this->availableSlots)) {
+            echo 'No doctor availability.';
         }
 
         // Close the HTML container tags.

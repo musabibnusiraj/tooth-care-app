@@ -4,7 +4,7 @@ require_once __DIR__ . './../../models/DoctorAvailability.php';
 
 $doctorAvailabilityModel = new DoctorAvailability();
 $doctorAvailabilities = $doctorAvailabilityModel->getAll();
-
+// dd($doctorAvailabilities);
 ?>
 <div class="container">
 
@@ -35,7 +35,7 @@ $doctorAvailabilities = $doctorAvailabilityModel->getAll();
                                     <td> <?= $c['day'] ?? ""; ?> </td>
                                     <td> <?= $c['session_from'] ?? ""; ?> </td>
                                     <td> <?= $c['session_to'] ?? ""; ?> </td>
-                                    <td> <?= $c['doctor_id'] ?? ""; ?> </td>
+                                    <td> <?= $c['doctor_name'] ?? ""; ?> </td>
                                     <td>
                                         <div class="">
                                             <?php if ($c['is_active'] == 1) { ?>
