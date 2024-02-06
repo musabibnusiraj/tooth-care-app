@@ -3,6 +3,9 @@
 include __DIR__ . '/../../config.php';
 include __DIR__ . '/../../helpers/AppManager.php';
 
+$sm = AppManager::getSM();
+$username = $sm->getAttribute("username");
+
 $currentUrl = $_SERVER['SCRIPT_NAME'];
 
 // Extract the last filename from the URL
@@ -103,6 +106,12 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                             <a href="<?= url('views/admin/doctor_availability.php') ?>" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-time-five"></i>
                                 <div data-i18n="Analytics">Doctor Availability</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="<?= url('views/admin/payments.php') ?>" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-wallet"></i>
+                                <div data-i18n="Analytics">Payments</div>
                             </a>
                         </li>
                         <li class="menu-item <?= $currentFilename === "treatments.php" ? 'active' : '' ?>">
