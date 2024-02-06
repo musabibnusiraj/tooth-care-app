@@ -5,8 +5,10 @@ require_once __DIR__ . './../../models/Appointment.php';
 $appointmentModel = new Appointment();
 if ($permission == 'operator') {
     $appointments = $appointmentModel->getAllWithDoctorAndTreatment();
-} else {
+} elseif ($permission == 'doctor') {
     $appointments = $appointmentModel->getAllWithDoctorAndTreatmentByUserId($user_id);
+} else {
+    dd('Permission denied!');
 }
 
 ?>
@@ -46,7 +48,9 @@ if ($permission == 'operator') {
                                 <th class="text-nowrap">Date</th>
                                 <th class="text-nowrap">Appointment No</th>
                                 <th class="text-nowrap">Treatment</th>
-                                <th class="text-nowrap">Doctor</th>
+                                <?php if ($permission == 'operator') : ?>
+                                    <th class="text-nowrap">Doctor</th>
+                                <?php endif; ?>
                                 <th class="text-nowrap">Patient Name</th>
                                 <th class="text-nowrap">Time Slot From</th>
                                 <th class="text-nowrap">Time Slot To</th>
@@ -76,7 +80,9 @@ if ($permission == 'operator') {
                                         <td class="text-nowrap" class="appointment_date"><?= $c['appointment_date'] ?? ""; ?></td>
                                         <td class="text-nowrap">#<?= $c['id'] ?? ""; ?> - <?= $c['appointment_no'] ?? ""; ?> </td>
                                         <td class="text-nowrap"> <?= $c['treatment_name'] ?? ""; ?> </td>
-                                        <td class="text-nowrap"> <?= $c['doctor_name'] ?? ""; ?> </td>
+                                        <?php if ($permission == 'operator') : ?>
+                                            <td class="text-nowrap"> <?= $c['doctor_name'] ?? ""; ?> </td>
+                                        <?php endif; ?>
                                         <td class="text-nowrap"> <?= $c['patient_name'] ?? ""; ?> </td>
                                         <td class="text-nowrap"> <?= $timeSlotFrom ?? ""; ?> </td>
                                         <td class="text-nowrap"> <?= $timeSlotTo ?? ""; ?> </td>
