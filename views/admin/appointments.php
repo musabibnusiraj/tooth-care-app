@@ -6,7 +6,7 @@ $appointmentModel = new Appointment();
 if ($permission == 'operator') {
     $appointments = $appointmentModel->getAllWithDoctorAndTreatment();
 } else {
-    $appointments = [];
+    $appointments = $appointmentModel->getAllWithDoctorAndTreatmentByUserId($user_id);
 }
 
 ?>

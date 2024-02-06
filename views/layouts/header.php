@@ -6,7 +6,7 @@ include __DIR__ . '/../../helpers/AppManager.php';
 $sm = AppManager::getSM();
 $username = $sm->getAttribute("username");
 $permission = $sm->getAttribute("permission");
-$user_id = $sm->getAttribute("id");
+$user_id = $sm->getAttribute("userId");
 
 if (!isset($username)) {
     dd('Permission denied!');
