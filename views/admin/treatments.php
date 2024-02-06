@@ -1,6 +1,6 @@
 <?php
 require_once('../layouts/header.php');
-require_once __DIR__ . './../../models/Treatment.php';
+require_once __DIR__ . '/../../models/Treatment.php';
 
 $treatmentModel = new Treatment();
 $treatments = $treatmentModel->getAll();

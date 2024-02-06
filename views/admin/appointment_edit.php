@@ -1,6 +1,6 @@
 <?php
 require_once('../layouts/header.php');
-require_once __DIR__ . './../../models/Appointment.php';
+require_once __DIR__ . '/../../models/Appointment.php';
 
 $id = $_GET['id'] ?? null;
 $appointmentModel = new Appointment();
