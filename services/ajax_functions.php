@@ -25,8 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if ($created) {
 
             if ($permission == 'doctor') {
+                $user_id = $userModel->getLastInsertedUserId();
                 $doctorModel = new Doctor();
-                $doctorCreated =  $doctorModel->createDoctor($doctor_name,  $about_doctor, 1); // TODO 
+                $doctorCreated =  $doctorModel->createDoctor($doctor_name,  $about_doctor, $user_id);
             }
 
             echo json_encode(['success' => true, 'message' => "User created successfully!"]);
