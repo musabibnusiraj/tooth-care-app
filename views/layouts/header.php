@@ -5,6 +5,7 @@ include __DIR__ . '/../../helpers/AppManager.php';
 
 $sm = AppManager::getSM();
 $username = $sm->getAttribute("username");
+$permission = $sm->getAttribute("permission");
 
 $currentUrl = $_SERVER['SCRIPT_NAME'];
 
@@ -172,8 +173,10 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
-                                                        <span class="fw-semibold d-block">John Doe</span>
-                                                        <small class="text-muted">Admin</small>
+                                                        <span class="fw-semibold d-block"><?= $username ?></span>
+                                                        <small class="text-muted text-capitalize">
+                                                            <?= $permission ?>
+                                                        </small>
                                                     </div>
                                                 </div>
                                             </a>
