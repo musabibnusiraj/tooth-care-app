@@ -3,7 +3,11 @@ require_once('../layouts/header.php');
 require_once __DIR__ . './../../models/Appointment.php';
 
 $appointmentModel = new Appointment();
-$appointments = $appointmentModel->getAllWithDoctorAndTreatment();
+if ($permission == 'operator') {
+    $appointments = $appointmentModel->getAllWithDoctorAndTreatment();
+} else {
+    $appointments = [];
+}
 
 ?>
 <div class="container">
