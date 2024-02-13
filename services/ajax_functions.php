@@ -7,6 +7,9 @@ require_once '../models/Treatment.php';
 require_once '../models/User.php';
 require_once '../models/Doctor.php';
 
+// Define target directory
+$target_dir = "../assets/uploads/";
+
 //create user
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_user') {
 
@@ -19,12 +22,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $doctor_name = $_POST['doctor_name'] ?? null;
         $about_doctor = $_POST['about_doctor'] ?? null;
 
+        // Get file information
+        $image = $_FILES["image"] ?? null;
+
         $userModel = new User();
         $created =  $userModel->createUser($username, $password, $permission, $email);
-
         if ($created) {
 
             if ($permission == 'doctor') {
+                // Check if file is uploaded
+                if (isset($image)) {
+                    // Check if there are errors
+                    if ($image["error"] > 0) {
+                        echo "Error uploading file: " . $image["error"];
+                    } else {
+                        // Check if file is an image
+                        if (getimagesize($image["tmp_name"]) !== false) {
+                            // Check file size (optional)
+                            if ($image["size"] < 500000) { // 500kb limit
+                                // Generate unique filename
+                                $new_filename = uniqid() . "." . pathinfo($image["name"])["extension"];
+
+                                // Move uploaded file to target directory
+                                if (move_uploaded_file($image["tmp_name"], $target_dir . $new_filename)) {
+                                    echo "Image uploaded successfully: " . $new_filename;
+                                } else {
+                                    echo "Error moving uploaded file.";
+                                }
+                            } else {
+                                echo "File size is too large.";
+                            }
+                        } else {
+                            echo "Uploaded file is not an image.";
+                        }
+                    }
+                } else {
+                    echo "No file selected.";
+                }
+
                 $user_id = $userModel->getLastInsertedUserId();
                 $doctorModel = new Doctor();
                 $doctorCreated =  $doctorModel->createDoctor($doctor_name,  $about_doctor, $user_id);

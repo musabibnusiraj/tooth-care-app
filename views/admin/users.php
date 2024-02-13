@@ -77,7 +77,7 @@ $users = $userModel->getAll();
 <div class="modal fade " id="createUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="create-user-form" action="<?= url('services/ajax_functions.php') ?>">
+            <form id="create-user-form" action="<?= url('services/ajax_functions.php') ?>" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="create_user">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel1">Create User</h5>
@@ -146,7 +146,7 @@ $users = $userModel->getAll();
 <div class="modal fade " id="editUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="update-user-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off">
+            <form id="update-user-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="update_user">
                 <input type="hidden" name="id" id="user_id">
                 <div class="modal-header">
@@ -232,23 +232,65 @@ require_once('../layouts/footer.php');
     $(document).ready(function() {
 
         // Handle modal button click
-        $('#create-now').on('click', function() {
+        // $('#create-now').on('click', function() {
 
+        //     // Get the form element
+        //     var form = $('#create-user-form')[0];
+        //     $('#create-user-form')[0].reportValidity();
+
+        //     // Check form validity
+        //     if (form.checkValidity()) {
+        //         // Serialize the form data
+        //         var formData = $('#create-user-form').serialize();
+        //         var formAction = $('#create-user-form').attr('action');
+
+        //         // Perform AJAX request
+        //         $.ajax({
+        //             url: formAction,
+        //             type: 'POST',
+        //             data: formData, // Form data
+        //             dataType: 'json',
+        //             success: function(response) {
+        //                 showAlert(response.message, response.success ? 'primary' : 'danger');
+        //                 if (response.success) {
+        //                     $('#createUserModal').modal('hide');
+        //                     setTimeout(function() {
+        //                         location.reload();
+        //                     }, 1000);
+        //                 }
+        //             },
+        //             error: function(error) {
+        //                 // Handle the error
+        //                 console.error('Error submitting the form:', error);
+        //             },
+        //             complete: function(response) {
+        //                 // This will be executed regardless of success or error
+        //                 console.log('Request complete:', response);
+        //             }
+        //         });
+        //     } else {
+        //         var message = ('Form is not valid. Please check your inputs.');
+        //         showAlert(message, 'danger');
+        //     }
+        // });
+
+        $('#create-now').on('click', function() {
             // Get the form element
             var form = $('#create-user-form')[0];
             $('#create-user-form')[0].reportValidity();
 
             // Check form validity
             if (form.checkValidity()) {
-                // Serialize the form data
-                var formData = $('#create-user-form').serialize();
-                var formAction = $('#create-user-form').attr('action');
+                // Create a FormData object
+                var formData = new FormData($('#create-user-form')[0]);
 
                 // Perform AJAX request
                 $.ajax({
-                    url: formAction,
+                    url: $('#create-user-form').attr('action'),
                     type: 'POST',
-                    data: formData, // Form data
+                    data: formData,
+                    contentType: false, // Don't set content type
+                    processData: false, // Don't process the data
                     dataType: 'json',
                     success: function(response) {
                         showAlert(response.message, response.success ? 'primary' : 'danger');
@@ -274,6 +316,7 @@ require_once('../layouts/footer.php');
             }
         });
 
+
         $('.edit-user').on('click', async function() {
             var user_id = $(this).data('id');
             await getUserById(user_id);
@@ -296,6 +339,7 @@ require_once('../layouts/footer.php');
                 // Serialize the form data
                 var formData = $('#update-user-form').serialize();
                 var formAction = $('#update-user-form').attr('action');
+                formData.append("image", $("#image").prop("files")[0]);
 
                 // Perform AJAX request
                 $.ajax({
@@ -303,6 +347,8 @@ require_once('../layouts/footer.php');
                     type: 'POST',
                     data: formData, // Form data
                     dataType: 'json',
+                    contentType: false,
+                    processData: false,
                     success: function(response) {
                         showAlert(response.message, response.success ? 'primary' : 'danger', 'alert-container-update-form');
                         if (response.success) {
@@ -339,6 +385,10 @@ require_once('../layouts/footer.php');
                     '<div class="col-12 mb-3">' +
                     '<label for="about" class="form-label">About Doctor</label>' +
                     '<textarea id="about" name="about_doctor" class="form-control" placeholder="Enter About" required></textarea>' +
+                    '</div>' +
+                    '<div class="col-12 mb-3">' +
+                    '<label for="formFile" class="form-label">Doctor Photo</label>' +
+                    '<input class="form-control" name="image" type="file" id="formFile" accept="image/*">' +
                     '</div>' +
                     '</div>'
                 );
