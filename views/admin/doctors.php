@@ -32,7 +32,13 @@ $doctors = $doctorModel->getAll();
                                     <td> <?= $c['id'] ?? ""; ?> </td>
                                     <td> <?= $c['name'] ?? ""; ?> </td>
                                     <td> <?= $c['about'] ?? ""; ?> </td>
-                                    <td> <img src="<?= asset('assets/img/avatars/1.png') ?>" alt="user-avatar" class="d-block rounded m-3" width="80" id="uploadedAvatar"> </td>
+                                    <td>
+                                        <?php if (isset($c['photo']) || !empty($c['photo'])) : ?>
+                                            <img src="<?= asset('assets/uploads/' . $c['photo']) ?>" alt="user-avatar" class="d-block rounded m-3" width="80" id="uploadedAvatar">
+                                        <?php else : ?>
+                                            <img src="<?= asset('assets/img/avatars/1.png') ?>" alt="user-avatar" class="d-block rounded m-3" width="80" id="uploadedAvatar">
+                                        <?php endif; ?>
+                                    </td>
                                     <td>
                                         <div class="">
                                             <?php if ($c['is_active'] == 1) { ?>
