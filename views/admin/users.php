@@ -188,7 +188,7 @@ $users = $userModel->getAll();
                             <label class="form-label" for="permission">Permission</label>
                             <div class="input-group">
                                 <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                                <select class="form-select" id="permission" name="permission" required>
+                                <select class="form-select" id="edit_permission" name="permission" required>
                                     <option selected="" value="">Choose...</option>
                                     <option value="operator">Operator</option>
                                     <option value="doctor">Doctor</option>
@@ -208,7 +208,7 @@ $users = $userModel->getAll();
                             </div>
                         </div>
                     </div>
-
+                    <div id="edit-additional-fields"></div>
                     <div class="mb-3 mt-3">
                         <div id="alert-container-update-form"></div>
                     </div>
@@ -337,9 +337,8 @@ require_once('../layouts/footer.php');
             // Check form validity
             if (form.checkValidity()) {
                 // Serialize the form data
-                var formData = $('#update-user-form').serialize();
                 var formAction = $('#update-user-form').attr('action');
-                formData.append("image", $("#image").prop("files")[0]);
+                var formData = new FormData($('#update-user-form')[0]);
 
                 // Perform AJAX request
                 $.ajax({
@@ -388,7 +387,7 @@ require_once('../layouts/footer.php');
                     '</div>' +
                     '<div class="col-12 mb-3">' +
                     '<label for="formFile" class="form-label">Doctor Photo</label>' +
-                    '<input class="form-control" name="image" type="file" id="formFile" accept="image/*">' +
+                    '<input class="form-control" name="image" id="image" type="file" accept="image/*">' +
                     '</div>' +
                     '</div>'
                 );
@@ -398,9 +397,33 @@ require_once('../layouts/footer.php');
         });
 
         // Trigger change event on page load if doctor permission is selected by default
-        if ($('#permission').val() === 'doctor') {
-            $('#permission').trigger('change');
+        if ($('#permission, #edit_permission').val() === 'doctor') {
+            $('#permission, #edit_permission').trigger('change');
         }
+
+        $('#edit_permission').change(function() {
+            var permission = $(this).val();
+            if (permission === 'doctor') {
+                $('#edit-additional-fields').html(
+                    '<div class="row mt-2">' +
+                    '<div class="col-12 mb-3">' +
+                    '<label for="name" class="form-label">Doctor Name</label>' +
+                    '<input type="text" id="edit_name" name="doctor_name" class="form-control" placeholder="Enter Name" required />' +
+                    '</div>' +
+                    '<div class="col-12 mb-3">' +
+                    '<label for="about" class="form-label">About Doctor</label>' +
+                    '<textarea id="edit_about" name="about_doctor" class="form-control" placeholder="Enter About" required></textarea>' +
+                    '</div>' +
+                    '<div class="col-12 mb-3">' +
+                    '<label for="formFile" class="form-label">Doctor Photo</label>' +
+                    '<input class="form-control" name="image" id="edit_image" type="file" accept="image/*">' +
+                    '</div>' +
+                    '</div>'
+                );
+            } else {
+                $('#edit-additional-fields').empty();
+            }
+        });
     });
 
     async function getUserById(id) {
