@@ -26,7 +26,11 @@ $doctors = $doctorModel->getAllActive();
                             <div class="card-header"></div>
                             <div class="card-body">
                                 <div class="col-md-7 mx-auto">
-                                    <img src="<?= asset('assets/img/avatars/1.png') ?>" alt="user-avatar" class="d-block rounded m-3" width="150" id="uploadedAvatar">
+                                    <?php if (isset($doctor['photo']) || !empty($doctor['photo'])) : ?>
+                                        <img src="<?= asset('assets/uploads/' . $doctor['photo']) ?>" alt="user-avatar" class="d-block rounded m-3" width="150" id="uploadedAvatar">
+                                    <?php else : ?>
+                                        <img src="<?= asset('assets/img/avatars/1.png') ?>" alt="user-avatar" class="d-block rounded m-3" width="150" id="uploadedAvatar">
+                                    <?php endif; ?>
                                 </div>
                                 <h5 class="card-title"><?= $name ?></h5>
                                 <p class="card-text">
