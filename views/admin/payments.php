@@ -18,7 +18,7 @@ $treatments = $treatmentModel->getAll();
             <div class="card">
 
                 <!-- /.card-header -->
-                <div class="card-body p-0">
+                <div class="card-body p-0 table-responsive">
 
                     <table class="table table-striped">
                         <thead>
