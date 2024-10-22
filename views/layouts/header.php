@@ -9,7 +9,7 @@ $permission = $sm->getAttribute("permission");
 $user_id = $sm->getAttribute("userId");
 
 if (!isset($username)) {
-    dd('Permission denied!');
+    header('location: ../../index.php');
 }
 
 $currentUrl = $_SERVER['SCRIPT_NAME'];

@@ -8,7 +8,7 @@ if ($permission == 'operator') {
 } elseif ($permission == 'doctor') {
     $appointments = $appointmentModel->getAllWithDoctorAndTreatmentByUserId($user_id);
 } else {
-    dd('Permission denied!');
+    header('location: views/auth/login.php');
 }
 
 ?>
