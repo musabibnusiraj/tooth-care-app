@@ -245,7 +245,7 @@ if (
         $email = $_POST['email'] ?? "";
         $nic = $_POST['nic'] ?? "";
 
-        // $appointment = new Appointment();
+        $appointment = new Appointment();
         $appointmentData = $appointment->getById($appointment_id);
 
         if (!empty($appointmentData)) {
